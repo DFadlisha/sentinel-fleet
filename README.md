@@ -1,16 +1,60 @@
-# React + Vite
+# 🚚 Sentinel Fleet Command
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Sentinel Fleet Command** is a modern, mobile-first fleet management application built for efficiency and simplicity. It allows fleet managers to track vehicle status, monitor expiry dates (Roadtax & Insurance), and manage incident reports directly from their mobile devices.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*   **Live Fleet Status**:
+    *   Real-time monitoring of all vehicles.
+    *   Visual indicators for expiry status (Green = OK, Yellow = Warning, Red = Critical).
+    *   **Pull-to-Refresh** to instantly update data.
+*   **Smart Expiry Notifications**:
+    *   **Client-Side Local Notifications**: Get notified automatically 7 days before any Roadtax or Insurance expires. No server configuration required.
+*   **Incident Reporting**:
+    *   Submit incident reports (Accidents, Breakdowns, etc.) with details and photos (future scope).
+    *   **Direct Sharing**: Instantly share report summaries via **WhatsApp** or **Email** with a single tap.
+*   **Easy Unit Registration**:
+    *   Manually add vehicles with strict date validation (dd/mm/yyyy).
+    *   **Excel Import**: Bulk upload vehicles by importing an Excel (.xlsx) file. Supports customizable columns like Place, Color, Last Service, etc.
+*   **Offline First Design**: Built as a PWA (Progressive Web App) with Capacitor, ready for Android and iOS.
 
-## React Compiler
+## 🛠 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+*   **Frontend**: React.js + Vite
+*   **Styling**: Tailwind CSS
+*   **Mobile Engine**: Capacitor (Android/iOS)
+*   **Database**: Firebase Firestore (NoSQL)
+*   **Notifications**: @capacitor/local-notifications
+*   **Deployment**: Firebase Hosting (Free Tier)
 
-## Expanding the ESLint configuration
+## 📱 How to Run
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Local Development
+```bash
+npm install
+npm run dev
+```
+
+### Build for Android
+```bash
+npm run build
+npx cap sync android
+npx cap open android
+# Or run on emulator directly:
+npx cap run android --target <emulator_id>
+```
+
+### Build for iOS
+1.  Ensure you are on macOS with Xcode installed.
+2.  Run `npx cap sync ios`.
+3.  Open Xcode (`npx cap open ios`) and build/archive for your device.
+
+## 📂 Project Structure
+
+*   `src/pages`: Main application views (Dashboard, AddCar, ReportIncident).
+*   `src/components`: Reusable UI components (Navbar, BottomNav).
+*   `src/utils`: Helper functions (Date parsing, Notifications logic).
+*   `src/firebase.js`: Firebase configuration and initialization.
+
+---
+*Built for NES SOLUTION AND NETWORK SDN BHD.*
