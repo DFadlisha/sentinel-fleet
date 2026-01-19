@@ -6,9 +6,7 @@ export default function Navbar() {
             <div className="container mx-auto p-4 flex justify-between items-center">
                 {/* LOGO */}
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-red-800 rounded flex items-center justify-center shadow-lg transform -skew-x-12">
-                        <span className="font-black text-xl italic transform skew-x-12">S</span>
-                    </div>
+                    <img src="/logo.png" alt="Sentinel Logo" className="w-10 h-10 object-contain drop-shadow-md" />
                     <div>
                         <h1 className="text-xl font-bold tracking-widest uppercase leading-none">Sentinel</h1>
                         <p className="text-[10px] text-gray-400 tracking-wider">FLEET COMMAND</p>
