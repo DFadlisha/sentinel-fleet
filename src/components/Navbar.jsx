@@ -15,8 +15,8 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                {/* LINKS */}
-                <div className="flex gap-4">
+                {/* LINKS - Hidden on Mobile, shown on Desktop */}
+                <div className="hidden md:flex gap-4">
                     <Link to="/" className="text-sm font-mono hover:text-red-400 transition-colors py-2">STATUS</Link>
                     <Link to="/add" className="text-sm font-mono bg-white text-sentinel-bg px-4 py-2 rounded font-bold hover:bg-red-600 hover:text-white transition-all shadow-lg">
                         + NEW UNIT

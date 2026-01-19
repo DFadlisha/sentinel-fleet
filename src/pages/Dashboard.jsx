@@ -4,28 +4,74 @@ import { collection, onSnapshot } from 'firebase/firestore';
 import { formatDate } from '../utils/dateHelpers';
 import { getCarStatus } from '../utils/serviceLogic';
 
+import { scheduleCleanNotifications, requestNotificationPermission } from '../utils/notificationManager';
+
 export default function Dashboard() {
     const [cars, setCars] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
+    const [touchStart, setTouchStart] = useState(0);
+
+    // Request permissions on mount
+    useEffect(() => {
+        requestNotificationPermission();
+    }, []);
+
+    const fetchCars = () => {
+        setRefreshing(true);
+        // Snapshot already handles updates, but we can simulate a manual fetch/reset
+        setTimeout(() => setRefreshing(false), 1000);
+    };
+
+    const handleTouchStart = (e) => setTouchStart(e.targetTouches[0].clientY);
+    const handleTouchMove = (e) => {
+        const touchEnd = e.targetTouches[0].clientY;
+        if (touchStart - touchEnd < -150 && window.scrollY === 0 && !refreshing) {
+            fetchCars();
+        }
+    };
 
     useEffect(() => {
         // Real-time listener for database changes
         const unsubscribe = onSnapshot(collection(db, 'cars'), (snapshot) => {
             const list = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setCars(list);
+
+            // Re-schedule notifications whenever data changes
+            scheduleCleanNotifications(list);
         });
         return () => unsubscribe();
     }, []);
 
     return (
-        <div className="p-4 max-w-6xl mx-auto">
+        <div
+            className="p-4 max-w-6xl mx-auto"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+        >
+            {refreshing && (
+                <div className="flex justify-center mb-4 animate-bounce">
+                    <span className="text-red-500 font-bold text-xs uppercase tracking-widest">Refreshing Fleet...</span>
+                </div>
+            )}
             <div className="flex items-center justify-between mb-8 mt-4">
                 <h2 className="text-2xl font-bold text-gray-200 tracking-tight">Live Fleet Status</h2>
-                <span className="bg-sentinel-card px-3 py-1 rounded text-xs text-gray-400 font-mono border border-gray-700">
-                    UNITS: {cars.length}
-                </span>
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={fetchCars}
+                        className="p-2 bg-sentinel-card rounded border border-gray-700 hover:text-red-500 transition-colors"
+                        title="Refresh"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                    </button>
+                    <span className="bg-sentinel-card px-3 py-1 rounded text-xs text-gray-400 font-mono border border-gray-700">
+                        UNITS: {cars.length}
+                    </span>
+                </div>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {cars.map(car => {
                     const { status, alerts } = getCarStatus(car);
 
