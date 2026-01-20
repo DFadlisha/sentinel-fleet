@@ -392,6 +392,7 @@ class _AddUnitPageState extends State<AddUnitPage> {
         // Schedule notifications
         _scheduleExpiryNotification(_plateController.text, 'Roadtax', _roadTaxDateController.text);
         _scheduleExpiryNotification(_plateController.text, 'Insurance', _insuranceDateController.text);
+        _scheduleServiceNotification(_plateController.text, _serviceDateController.text);
 
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
@@ -431,6 +432,35 @@ class _AddUnitPageState extends State<AddUnitPage> {
             android: AndroidNotificationDetails(
               'expiry_alerts',
               'Expiry Alerts',
+              importance: Importance.max,
+              priority: Priority.high,
+            ),
+          ),
+          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+          uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        );
+      }
+    } catch (_) {}
+  }
+
+  void _scheduleServiceNotification(String plate, String dateStr) async {
+    try {
+      final lastService = DateFormat('dd/MM/yyyy').parse(dateStr);
+      final nextService = lastService.add(const Duration(days: 90));
+      final notifyDate = nextService.subtract(const Duration(days: 7));
+      
+      if (notifyDate.isAfter(DateTime.now())) {
+        final int id = plate.hashCode + 'service'.hashCode;
+        
+        await flutterLocalNotificationsPlugin.zonedSchedule(
+          id,
+          'Service Due: $plate',
+          'Periodic service for $plate is due in 1 week (${DateFormat('dd/MM').format(nextService)})',
+          tz.TZDateTime.from(notifyDate, tz.local),
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'service_alerts',
+              'Service Alerts',
               importance: Importance.max,
               priority: Priority.high,
             ),
