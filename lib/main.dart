@@ -438,6 +438,7 @@ class _AddUnitPageState extends State<AddUnitPage> {
           ),
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
           uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+
         );
       }
     } catch (_) {}
@@ -467,6 +468,7 @@ class _AddUnitPageState extends State<AddUnitPage> {
           ),
           androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
           uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+
         );
       }
     } catch (_) {}

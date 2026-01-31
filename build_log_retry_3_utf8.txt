@@ -1,0 +1,64 @@
+﻿flutter : Support for 
+Android x86 targets will be 
+removed in the next stable 
+release after 3.27. See http
+s://github.com/flutter/flutt
+er/issues/157543 for 
+details.
+At line:1 char:1
++ flutter build apk --debug 
+> build_log_retry_3.txt 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          
+    : NotSpecified: (Suppo  
+  rt for And...43 for det   
+ ails.:String) [], Remot    
+eException
+    + FullyQualifiedErrorId 
+    : NativeCommandError
+ 
+Running Gradle task 'assembleDebug'...                          
+e: file:///C:/Users/User/Doc
+uments/SEM%207/INDUSTRIAL%20
+THINGS/NES%20SOLUTION%20AND%
+20NETWORK%20SDN%20BHD/Fleet/
+sentinel-fleet/android/app/b
+uild.gradle.kts:48:2: 
+Expecting '}'
+
+FAILURE: Build failed with 
+an exception.
+
+* Where:
+Build file 'C:\Users\User\Do
+cuments\SEM 7\INDUSTRIAL 
+THINGS\NES SOLUTION AND 
+NETWORK SDN BHD\Fleet\sentin
+el-fleet\android\app\build.g
+radle.kts' line: 48
+
+* What went wrong:
+Script compilation error:
+
+  Line 48: }
+            ^ Expecting '}'
+
+1 error
+
+* Try:
+> Run with --stacktrace 
+option to get the stack 
+trace.
+> Run with --info or 
+--debug option to get more 
+log output.
+> Run with --scan to get 
+full insights.
+> Get more help at 
+https://help.gradle.org.
+
+BUILD FAILED in 2s
+Running Gradle task 'assembleDebug'...                              3.2s
+Gradle task assembleDebug 
+failed with exit code 1
